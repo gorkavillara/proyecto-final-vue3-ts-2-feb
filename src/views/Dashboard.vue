@@ -3,7 +3,7 @@
         <div class="sidebar">
             <div class="card">
                 <div style="font-weight: 800">Logo</div>
-                <div>Secciones</div>
+                <Secciones />
                 <div>Log out</div>
             </div>
         </div>
@@ -13,7 +13,9 @@
     </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+    import Secciones from '@/components/Secciones.vue';
+</script>
 
 <style scoped>
     div.dashboard {
