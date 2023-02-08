@@ -15,11 +15,17 @@ export const useAuth = () => {
             email, password
         })
         const { user } = data
+        console.log(user)
         activeUser.value = {
             email,
             username: user.username
         }
+        return activeUser.value
     }
 
-    return { activeUser, login }
+    const logout = () => {
+        activeUser.value = null
+    }
+
+    return { activeUser, login, logout }
 }

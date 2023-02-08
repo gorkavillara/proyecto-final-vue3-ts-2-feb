@@ -4,31 +4,21 @@
       <div class="card">
         <div style="font-weight: 800">Logo</div>
         <Secciones />
-        <div>Log out</div>
+        <div class="sidebarlink" @click="logout">Log out</div>
       </div>
     </div>
     <div class="content">
-        <router-view></router-view>
-        <p>{{ activeUser }}</p>
+      <router-view></router-view>
+      <p>{{ activeUser }}</p>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { inject } from "vue";
 import Secciones from "@/components/Secciones.vue";
-import { useAuth } from "@/utils/auth";
 
-const { activeUser, login } = useAuth()
-const pruebaLogin = (email: string, password: string) => {
-    login(email, password)
-}
-
-const route = ref("login")
-const switchRoute = (newRoute: string) => {
-    route.value = newRoute
-}
-
+const { activeUser, logout } = inject("globalAuth") as any;
 </script>
 
 <style scoped>

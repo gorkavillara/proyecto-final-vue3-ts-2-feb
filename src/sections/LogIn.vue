@@ -1,32 +1,42 @@
 <template>
   <div class="login-form">
     <h3>Identifícate en nuestro dashboard</h3>
-    <input type="text" v-model="formData.email" placeholder="Tu email" />
+    <input type="text" v-on-enter="hazLogin" v-model="formData.email" placeholder="Tu email" />
     <input
       type="password"
       v-model="formData.password"
       placeholder="Tu contraseña"
+      v-on-enter="hazLogin"
     />
     <button @click="hazLogin">Aceptar</button>
-    <p>Active user: {{ props.activeUser }}</p>
+    <p>Active user: {{ activeUser }}</p>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { User } from "@/models";
-import { ref } from "vue";
+import { ref, DirectiveBinding, inject } from "vue";
 
-const props = defineProps<{ activeUser: User | null }>();
-const emit = defineEmits(["logIn"])
+const vOnEnter = {
+  mounted(el: HTMLElement, binding: DirectiveBinding) {
+    el.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Enter") return binding.value()
+      return
+    })
+  },
+}
+
+const { activeUser, login, logout } = inject("globalAuth") as any
+// const login = inject("login") as (email: string, password: string) => any
 
 const formData = ref({
   email: "",
   password: "",
 });
 
-const hazLogin = () => {
-  // login(formData.value.email, formData.value.password)
-  emit("logIn", formData.value.email, formData.value.password)
+const hazLogin = async() => {
+  console.log("Haciendo login")
+  await login(formData.value.email, formData.value.password)
+  // refActiveUser.value = newUser
 };
 </script>
 
