@@ -3,7 +3,7 @@
     <div class="sidebar">
       <div class="card">
         <div style="font-weight: 800">Logo</div>
-        <Secciones v-on:changeRoute="switchRoute" />
+        <Secciones />
         <div>Log out</div>
       </div>
     </div>
@@ -17,7 +17,6 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import Secciones from "@/components/Secciones.vue";
-import { Clientes, LogIn, Proveedores, ReservaSalas } from "@/sections";
 import { useAuth } from "@/utils/auth";
 
 const { activeUser, login } = useAuth()

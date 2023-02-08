@@ -1,38 +1,37 @@
 <template>
-  <ul>
-    <li
-      v-for="(seccion, index) in secciones"
-      :key="index"
-      @click="() => selectRoute(seccion)"
-    >
-      {{ seccion }}
-    </li>
-  </ul>
+  <div class="route-list">
+    <router-link v-for="(route, index) in routes" :key="index" :to="route.path">
+      {{ route.name }}
+    </router-link>
+  </div>
 </template>
 
 <script lang="ts" setup>
-const secciones = ["home", "clientes", "reservas", "proveedores"];
-const emit = defineEmits(["changeRoute"]);
-
-const selectRoute = (seccion: string) => {
-    emit("changeRoute", seccion)
-};
+import routes from '@/routes';
 </script>
 
 <style scoped>
-ul {
+div.route-list {
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-li {
-  list-style: none;
-  cursor: pointer;
+a {
   padding: 1rem;
-  border-radius: 0.25rem;
+  color: #2b2b2b;
+  text-decoration: none;
+  transition: all 0.3s;
+  background: #ffffff;
+  border-radius: 15px;
 }
-li:hover {
-  background-color: rgb(197, 255, 253);
+a:hover {
+  box-shadow:  5px 5px 20px #d9d9d9,
+              -5px -5px 20px #ffffff;
+}
+
+a.router-link-active {
+  box-shadow: inset 5px 5px 20px #d9d9d9,
+              inset -5px -5px 20px #ffffff;
 }
 </style>
