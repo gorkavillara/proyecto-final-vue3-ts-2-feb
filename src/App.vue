@@ -15,8 +15,8 @@
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
       <q-list>
-        <q-item-label header>Essential Links</q-item-label>
-        <q-item clickable tag="router-link" to="/login">
+        <q-item-label header>Links del proyecto</q-item-label>
+        <q-item clickable v-if="!activeUser" tag="router-link" to="/login">
           <q-item-section avatar>
             <q-icon name="code" />
           </q-item-section>
@@ -24,7 +24,7 @@
             <q-item-label>Login</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="router-link" to="/clientes">
+        <q-item clickable v-if="activeUser" tag="router-link" to="/clientes">
           <q-item-section avatar>
             <q-icon name="person" />
           </q-item-section>
@@ -32,7 +32,7 @@
             <q-item-label>Clientes</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="router-link" to="/reservas">
+        <q-item clickable v-if="activeUser" tag="router-link" to="/reservas">
           <q-item-section avatar>
             <q-icon name="event" />
           </q-item-section>
@@ -40,28 +40,37 @@
             <q-item-label>Reservas</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item v-if="activeUser" clickable @click="logoutButton">
+          <q-item-section avatar>
+            <q-icon name="logout" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Log Out</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
-    <q-page-container>
-      <p>Entorno: {{ entorno }}</p>
-      <p>Server url: {{ serverUrl }}</p>
+    <q-page-container class="q-pa-md q-gutter-sm">
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, inject } from "vue"
+import { useRouter } from "vue-router"
 const leftDrawerOpen = ref(false)
-
-const entorno = process.env.NODE_ENV
-const serverUrl = process.env.VUE_APP_SERVER_URL
-
-console.log(process.env)
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
+}
+const { logout, activeUser } = inject("globalAuth") as any
+
+const router = useRouter()
+const logoutButton = () => {
+  logout()
+  router.push("/login")
 }
 
 </script>

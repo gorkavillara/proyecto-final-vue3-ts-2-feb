@@ -16,6 +16,7 @@
 
 <script lang="ts" setup>
 import { ref, DirectiveBinding, inject } from "vue"
+import { useRouter } from "vue-router"
 
 const vOnEnter = {
   mounted (el: HTMLElement, binding: DirectiveBinding) {
@@ -33,10 +34,12 @@ const formData = ref({
   password: ""
 })
 
+const router = useRouter()
 const hazLogin = async () => {
   console.log("Haciendo login")
   await login(formData.value.email, formData.value.password)
   // refActiveUser.value = newUser
+  router.push("/clientes")
 }
 </script>
 
