@@ -1,19 +1,22 @@
 <template>
-  <div class="login-form">
-    <h3>Identifícate en nuestro dashboard</h3>
+  <div class="bg-white py-4 px-8 flex flex-col gap-4 items-stretch">
+    <h3 class="text-2xl">Identifícate en nuestro dashboard</h3>
     <input type="text" v-on-enter="hazLogin" v-model="formData.email" placeholder="Tu email" />
     <input
       type="password"
       v-model="formData.password"
       placeholder="Tu contraseña"
+      class="shadow-lg hover:shadow-2xl outline-none"
       v-on-enter="hazLogin"
     />
-    <button @click="hazLogin">Aceptar</button>
+    <Button text="Aceptar" btnType="info" />
+    <!-- <button class="bg-green-500 text-white rounded-lg" @click="hazLogin">Aceptar</button> -->
     <p>Active user: {{ activeUser }}</p>
   </div>
 </template>
 
 <script lang="ts" setup>
+import Button from "@/components/Button.vue";
 import { ref, DirectiveBinding, inject } from "vue";
 
 const vOnEnter = {
