@@ -1,6 +1,14 @@
+import '@babel/polyfill'
+import 'mutationobserver-shim'
+import './plugins/bootstrap-vue'
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from "vue-router"
-import "bootstrap/dist/css/bootstrap.min.css"
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+// Import Bootstrap and BootstrapVue CSS files (order is important)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 import { useAuth } from './utils/auth'
 import App from './App.vue'
 import routes from './routes'
@@ -26,5 +34,8 @@ const router = createRouter({
 app.provide("globalAuth", globalAuth)
 
 app.use(router)
+
+app.use(BootstrapVue)
+app.use(IconsPlugin)
 
 app.mount('#app')
