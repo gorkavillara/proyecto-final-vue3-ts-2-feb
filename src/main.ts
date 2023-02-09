@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from "vue-router"
+import "bootstrap/dist/css/bootstrap.min.css"
 import { useAuth } from './utils/auth'
 import App from './App.vue'
 import routes from './routes'
