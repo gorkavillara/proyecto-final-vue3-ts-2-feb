@@ -11,12 +11,12 @@
 </template>
 
 <script lang="ts" setup>
-const secciones = ["home", "clientes", "reservas", "proveedores"];
-const emit = defineEmits(["changeRoute"]);
+const secciones = ["home", "clientes", "reservas", "proveedores"]
+const emit = defineEmits(["changeRoute"])
 
 const selectRoute = (seccion: string) => {
-    emit("changeRoute", seccion)
-};
+  emit("changeRoute", seccion)
+}
 </script>
 
 <style scoped>

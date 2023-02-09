@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import routes from '@/routes';
+import routes from "@/routes"
 </script>
 
 <style scoped>

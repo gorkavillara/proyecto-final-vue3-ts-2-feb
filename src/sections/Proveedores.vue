@@ -1,1 +1,3 @@
-<template>Proveedores</template>
+<template>
+  <div>Proveedores</div>
+</template>

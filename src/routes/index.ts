@@ -1,21 +1,26 @@
-import { LogIn, Clientes, Proveedores, ReservaSalas } from "@/sections";
-import { RouteRecordRaw } from "vue-router";
-import { useAuth } from "@/utils/auth";
+import { LogIn, Clientes, Proveedores, ReservaSalas } from "@/sections"
+import { RouteRecordRaw } from "vue-router"
+import { useAuth } from "@/utils/auth"
+import HelloWorld from "@/components/HelloWorld.vue"
 
 const { checkAuth } = useAuth()
 
 const routes: RouteRecordRaw[] = [
   {
+    path: "/",
+    component: HelloWorld
+  },
+  {
     path: "/login",
     component: LogIn,
     name: "Login",
-    props: { activeUser: null },
+    props: { activeUser: null }
   },
   {
     path: "/clientes",
     component: Clientes,
     name: "Clientes",
-    async beforeEnter(to, from, next) {
+    async beforeEnter (to, from, next) {
       // Chequeamos si el usuario tiene permitido este acceso
       const isAuthenticated = await checkAuth(to.path)
       // Si sí => next()
@@ -24,10 +29,10 @@ const routes: RouteRecordRaw[] = [
       } else {
         next("/login")
       }
-    },
+    }
   },
   { path: "/proveedores", component: Proveedores, name: "Proveedores" },
-  { path: "/reservas", component: ReservaSalas, name: "ReservaSalas" },
-];
+  { path: "/reservas", component: ReservaSalas, name: "ReservaSalas" }
+]
 
-export default routes;
+export default routes

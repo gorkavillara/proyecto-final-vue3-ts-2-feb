@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts" setup>
-import { inject } from "vue";
+import { inject } from "vue"
 import { useRouter } from "vue-router"
 
-import Secciones from "@/components/Secciones.vue";
+import Secciones from "@/components/Secciones.vue"
 
-const { activeUser, logout } = inject("globalAuth") as any;
+const { activeUser, logout } = inject("globalAuth") as any
 
 const router = useRouter()
 const logoutButton = () => {
