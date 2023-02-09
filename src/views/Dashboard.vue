@@ -4,7 +4,7 @@
       <div class="card">
         <div style="font-weight: 800">Logo</div>
         <Secciones />
-        <div class="sidebarlink" @click="logout">Log out</div>
+        <div class="sidebarlink" @click="logoutButton">Log out</div>
       </div>
     </div>
     <div class="content">
@@ -16,9 +16,17 @@
 
 <script lang="ts" setup>
 import { inject } from "vue";
+import { useRouter } from "vue-router"
+
 import Secciones from "@/components/Secciones.vue";
 
 const { activeUser, logout } = inject("globalAuth") as any;
+
+const router = useRouter()
+const logoutButton = () => {
+  logout()
+  router.push("/login")
+}
 </script>
 
 <style scoped>

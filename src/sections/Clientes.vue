@@ -29,13 +29,19 @@
 import { ApiClient } from "@/models";
 import axios, { AxiosResponse } from "axios";
 import { onMounted, ref, Ref } from "vue";
+import { getTokenFromCookies } from "../utils/auth"
 
 const clients: Ref<ApiClient[]> = ref([])
 
-const serverUrl = "https://626d-178-237-232-187.eu.ngrok.io";
+const serverUrl = "https://135d-178-237-232-187.eu.ngrok.io";
 const obtenClientes = async () => {
+  const token = getTokenFromCookies()
   const res: AxiosResponse<ApiClient[], any> = await axios.post(`${serverUrl}/clients`, {
     action: "get",
+  }, {
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   });
 //   console.log(res.data);
   clients.value = res.data
