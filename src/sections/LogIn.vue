@@ -9,6 +9,7 @@
       v-on-enter="hazLogin"
     />
     <button @click="hazLogin">Aceptar</button>
+    <button class="btn btn-primary">Botón de bootstrap</button>
     <p>Active user: {{ activeUser }}</p>
   </div>
 </template>
