@@ -2,7 +2,7 @@ import { Ref, ref } from "vue"
 import axios from "axios"
 import { User } from "@/models"
 
-const serverUrl = "https://135d-178-237-232-187.eu.ngrok.io"
+const serverUrl = process.env.VUE_APP_SERVER_URL
 const tokenName = "jwt"
 
 const setCookie = (cookieName: string, value: string): void => {

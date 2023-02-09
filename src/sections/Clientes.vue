@@ -33,7 +33,7 @@ import { getTokenFromCookies } from "../utils/auth"
 
 const clients: Ref<ApiClient[]> = ref([])
 
-const serverUrl = "https://135d-178-237-232-187.eu.ngrok.io"
+const serverUrl = process.env.VUE_APP_SERVER_URL
 const obtenClientes = async () => {
   const token = getTokenFromCookies()
   const res: AxiosResponse<ApiClient[], any> = await axios.post(

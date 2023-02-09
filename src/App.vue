@@ -8,7 +8,7 @@
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
-          Title
+          Proyecto final
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -44,7 +44,8 @@
     </q-drawer>
 
     <q-page-container>
-      <!-- <HelloWorld /> -->
+      <p>Entorno: {{ entorno }}</p>
+      <p>Server url: {{ serverUrl }}</p>
       <router-view />
     </q-page-container>
   </q-layout>
@@ -53,6 +54,11 @@
 <script setup lang="ts">
 import { ref } from "vue"
 const leftDrawerOpen = ref(false)
+
+const entorno = process.env.NODE_ENV
+const serverUrl = process.env.VUE_APP_SERVER_URL
+
+console.log(process.env)
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
