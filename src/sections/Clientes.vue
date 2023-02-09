@@ -19,8 +19,8 @@
           <td>{{ client.email }}</td>
           <td>{{ client.age }}</td>
           <td>
-            <button>✏️</button>
-            <button>🗑️</button>
+            <q-btn flat round color="primary" icon="edit" @click="editClient(client)" />
+            <q-btn flat round color="red" icon="delete" />
           </td>
         </tr>
       </tbody>
@@ -38,8 +38,15 @@
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
-          <q-btn flat label="Cancelar" v-close-popup />
-          <q-btn flat label="Nuevo cliente" @click="creaNuevoCliente" />
+          <q-btn flat @click="closePrompt">
+            {{ loading ? "Cargando..." : "Cancelar"  }}
+          </q-btn>
+          <q-btn v-if="!editing" flat @click="creaNuevoCliente">
+            {{ loading ? "Cargando..." : "Nuevo cliente" }}
+          </q-btn>
+          <q-btn v-if="editing" flat @click="editarCliente">
+            {{ loading ? "Cargando..." : "Editar cliente" }}
+          </q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -47,7 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ApiClient } from "@/models"
+import { ApiClient, Client } from "@/models"
 import axios, { AxiosResponse } from "axios"
 import { onMounted, ref, Ref } from "vue"
 import { getTokenFromCookies } from "../utils/auth"
@@ -68,7 +75,7 @@ const obtenClientes = async () => {
       }
     }
   )
-  //   console.log(res.data);
+  // console.log(res.data)
   clients.value = res.data
 }
 
@@ -78,15 +85,81 @@ onMounted(() => {
 })
 
 const prompt = ref(false)
+const editing = ref(false)
 const nombre = ref("")
 const edad = ref(18)
 const email = ref("")
+
+const closePrompt = () => {
+  prompt.value = false
+  editing.value = false
+  resetForm()
+}
 
 const openPrompt = () => {
   prompt.value = true
 }
 
+const resetForm = () => {
+  nombre.value = ""
+  edad.value = 0
+  email.value = ""
+}
+
+const editClient = (client: Client) => {
+  editing.value = true
+  nombre.value = client.name
+  edad.value = client.age
+  email.value = client.email
+  prompt.value = true
+}
+
+const url = process.env.VUE_APP_SERVER_URL
+
+const loading = ref(false)
+
 const creaNuevoCliente = () => {
-  prompt.value = false
+  loading.value = true
+  axios
+    .post(`${url}/clients`, {
+      action: "create",
+      client: {
+        nombre: nombre.value,
+        edad: edad.value,
+        email: email.value
+      }
+    })
+    .then((r) => {
+      console.log(r.data)
+    })
+    .catch(console.error)
+    .finally(() => {
+      obtenClientes()
+      loading.value = false
+      closePrompt()
+    })
+  // prompt.value = false
+}
+const editarCliente = () => {
+  loading.value = true
+  axios
+    .post(`${url}/clients`, {
+      action: "edit",
+      client: {
+        nombre: nombre.value,
+        edad: edad.value,
+        email: email.value
+      }
+    })
+    .then((r) => {
+      console.log(r.data)
+    })
+    .catch(console.error)
+    .finally(() => {
+      obtenClientes()
+      loading.value = false
+      closePrompt()
+    })
+  // prompt.value = false
 }
 </script>
